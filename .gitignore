@@ -1,0 +1,33 @@
+# Node
+node_modules/
+.env
+.env.*
+dist/
+build/
+coverage/
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VSCode
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Logs
+logs/
+*.sqlite
+
+# Test
+*.test.js
+*.test.jsx
+*.test.ts
+*.test.tsx

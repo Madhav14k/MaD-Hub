@@ -1,0 +1,79 @@
+// Prisma schema for Collaborative Project Tracker
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  projects  Project[] @relation("ProjectOwner")
+  memberships ProjectMembership[]
+  comments  Comment[]
+  tasks     Task[]   @relation("TaskAssignee")
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  deadline    DateTime
+  ownerId     Int
+  owner       User     @relation("ProjectOwner", fields: [ownerId], references: [id])
+  inviteCode  String   @unique
+  memberships ProjectMembership[]
+  tasks       Task[]
+  createdAt   DateTime @default(now())
+}
+
+model ProjectMembership {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  projectId Int
+  role      String   // 'owner' or 'member'
+  user      User     @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
+
+  @@unique([userId, projectId])
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  status      String   // 'todo', 'inprogress', 'done'
+  projectId   Int
+  assigneeId  Int?
+  project     Project  @relation(fields: [projectId], references: [id])
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  comments    Comment[]
+  attachments Attachment[]
+  createdAt   DateTime @default(now())
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  userId    Int
+  taskId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Attachment {
+  id        Int      @id @default(autoincrement())
+  url       String
+  filename  String
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now())
+}
