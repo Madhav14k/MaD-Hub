@@ -1,3 +1,15 @@
+# 📸 Screenshots
+
+Screenshots of the app in action (located in `frontend/public/screenshots/`):
+
+### Dashboard
+![Dashboard](frontend/public/screenshots/Screenshot%202025-08-22%20225126.png)
+
+### Kanban Board
+![Kanban Board](frontend/public/screenshots/Screenshot%202025-08-22%20225143.png)
+
+### Task Details Dialog
+![Task Details](frontend/public/screenshots/Screenshot%202025-08-22%20225229.png)
 # MaD-Hub: Collaborative Project Tracker
 
 ## 🚀 Tech Stack
